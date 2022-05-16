@@ -59,9 +59,9 @@ async function RegisterToken(tkn,validUntil){
     let amqp = require('amqplib-rabbitmq');
 
     const publisher = new amqp('amqp://guest:guest@localhost:5672', {
-        queueName: 'message',
-        routeKey: 'new',
-        exchange: 'message', // default value is defaultExchange
+        queueName: 'token',
+        routeKey: 'newtoken',
+        exchange: 'token', // default value is defaultExchange
     });
     await publisher.sendMessageByRoute(user)
 };
