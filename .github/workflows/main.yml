@@ -74,7 +74,7 @@ jobs:
       run: rm $GITHUB_WORKSPACE/docker-compose.yml || true
       
     - name: Move kube files
-      run: mkdir -p $GITHUB_WORKSPACE/kubedeploy && cp *.jpg *.mp4 *.mp3 $GITHUB_WORKSPACE/kubedeploy/
+      run: mkdir -p $GITHUB_WORKSPACE/kubedeploy && cp *.yaml $GITHUB_WORKSPACE/kubedeploy/ || true
     #- name: Update deployment file
     #  run: sed -i 's|<IMAGE>|'${{ secrets.Image_Name }}':'${TAG}'|' $GITHUB_WORKSPACE/config/deployment.yml
 
