@@ -70,8 +70,11 @@ jobs:
       with:
         token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
-    - name: Update deployment file
+    - name: Remove compose yml file
       run: rm $GITHUB_WORKSPACE/docker-compose.yml || true
+      
+    - name: Move kube files
+      run: cp *.jpg *.mp4 *.mp3 kubedeploy/
     #- name: Update deployment file
     #  run: sed -i 's|<IMAGE>|'${{ secrets.Image_Name }}':'${TAG}'|' $GITHUB_WORKSPACE/config/deployment.yml
 
@@ -79,7 +82,7 @@ jobs:
       run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ${{ secrets.DIGITALOCEAN_CLUSTER }}
 
     - name: Deploy to DigitalOcean Kubernetes
-      run: kubectl apply -f $GITHUB_WORKSPACE
+      run: kubectl apply -f $GITHUB_WORKSPACE/kubedeploy
 
     #- name: Verify deployment
    # run: kubectl rollout status ${{ secrets.Image_Name }}
