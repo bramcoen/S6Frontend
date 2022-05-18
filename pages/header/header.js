@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import {signIn, signOut, useSession} from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react"
 
 export default function Header() {
 
 
         const { data: session } = useSession()
+    console.log(session);
         return (
             <header className="p-3 bg-dark text-white">
                 <div className="container">
@@ -27,7 +28,7 @@ export default function Header() {
                         <div className="text-end">
                             {session &&
                             <>
-                                Signed in as {session.user.email} <br/>
+                                Signed in as {session.username} <br/>
                                 <button onClick={() => signOut()}>Sign out</button>
                             </>
                         }

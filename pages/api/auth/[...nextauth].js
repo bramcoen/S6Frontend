@@ -1,6 +1,8 @@
 import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 import axios from "axios"
+import {serialize } from 'cookie';
+import {getCookie} from "cookies-next";
 
 export default (req, res) => {
     let options = {
@@ -24,67 +26,81 @@ export default (req, res) => {
                 const isAllowedToSignIn = true
                 if (isAllowedToSignIn) {
                     if (account.provider === 'google') {
-                        await RegisterToken(account.access_token, account.expires_at);
+                        console.log(account);
+                        await RegisterToken(account.id_token, account.expires_at,account.providerAccountId, profile.email);
+
                         return true;
                     }
                     // Return false to display a default error message
                     return false;
                     // Or you can return a URL to redirect to:
                     // return '/unauthorized'
-
                 }
             },
 
            async jwt({ token, user, account, profile, isNewUser }){
                 // Persist the OAuth access_token to the token right after signin
                 if (user) {
-                    token.accessToken = user.access_token;
+                    token.access_token = account.id_token;
+                    if (user.email){
+                        token.email = user.email;
+                    }
                 }
+
                 return token
             },
 
             async session({ session, user, token }) {
-                session.accessToken = token.accessToken
+                session.access_token = token.access_token
+                let username = await GetUsername(token.access_token);
+                console.log(username);
+                if (username != null) {
+                    session.username = username;
+                }
                 return session
             }
         }}
     return NextAuth(req, res, options)
 }
-async function RegisterToken(tkn,validUntil){
+async function RegisterToken(tkn,validUntil,providerId,email){
+    var t = null;
+    if (validUntil != null) {
+        t = new Date(1970, 0, 1); // Epoch
+        t.setSeconds(validUntil);
+    };
     let user = JSON.stringify({
-        token: tkn,
-        validUntil: validUntil
+        token: {
+            value: tkn,
+            validUntil: t
+        },
+        provideraccountid: providerId,
+        email: email
     });
 
     let amqp = require('amqplib-rabbitmq');
 
-    const publisher = new amqp('amqp://guest:guest@localhost:5672', {
+    const publisher = new amqp('amqp://guest:guest@143.198.251.117:5672', {
         queueName: 'token',
-        routeKey: 'newtoken',
+        routeKey: 'new',
         exchange: 'token', // default value is defaultExchange
     });
     await publisher.sendMessageByRoute(user)
 };
-/*
-   // export default (req, res, options) => NextAuth(req, res, options)
-async function getTokenFromYourAPIServer(email, name){
-    let jsonToken;
-    let user = JSON.stringify({
-        email: email,
-        name: name
-    });
-    console.log(email)
-    console.log(user)
-    axios.get(process.env.BackendUserURL+ "user/token", user,).then(json => {
-        jsonToken = json}).catch(i => console.log(i));
-    return jsonToken;
+async function GetUsername(backendToken){
+    if (backendToken) {
+        console.log(backendToken);
+        let username = "";
+        const instance = axios.create({
+            baseURL: process.env.BackendUserURL,
+            timeout: 10300
+        });
+        instance.defaults.headers.common['token'] = backendToken;
+     await instance.get( "user/me").then(json => {
+          username = json.data.name;
+        }).catch(i => console.log(i));
+        return username;
+    }
 }
-async function registerUser(email,reference,name){
-    let user = JSON.stringify({
-        email: email,
-        name: name,
-        reference: reference
-    });
-    axios.post(process.env.BackendUserURL+ "user/register" ,user).catch(i => console.log(i))
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
-*/
