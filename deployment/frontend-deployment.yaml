@@ -13,7 +13,7 @@ spec:
   selector:
     matchLabels:
       io.kompose.service: frontend
-  strategy: {}
+  strategy: RollingUpdate
   template:
     metadata:
       annotations:
@@ -26,6 +26,32 @@ spec:
       containers:
         - image: bramco/brams6frontend
           name: frontend
+          env:
+            - name: GOOGLE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: frontendSecret
+                  key: GOOGLE_CLIENT_ID
+            - name: GOOGLE_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: frontendSecret
+                  key: GOOGLE_CLIENT_SECRET
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: frontendSecret
+                  key: JWT_SECRET
+            - name: NEXTAUTH_URL
+              valueFrom:
+                secretKeyRef:
+                  name: frontendSecret
+                  key: NEXTAUTH_URL
+            - name: BackendURL
+              valueFrom:
+                secretKeyRef:
+                  name: frontendSecret
+                  key: BackendURL
           ports:
             - containerPort: 3000
           resources: {}
