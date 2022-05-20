@@ -1,7 +1,7 @@
 kind: Ingress
 apiVersion: networking.k8s.io/v1
 metadata:
-  name: ingress-spring-gateway
+  name: frontend-ingress
   namespace: default
   managedFields:
     - manager: k8saasapi
