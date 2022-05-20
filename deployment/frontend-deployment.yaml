@@ -26,10 +26,8 @@ spec:
       containers:
         - image: bramco/brams6frontend
           name: frontend
-          imagePullPolicy: Always
           ports:
-            - containerPort: 443
-            - containerPort: 80
+            - containerPort: 3000
           resources: {}
       hostname: frontend
       restartPolicy: Always
