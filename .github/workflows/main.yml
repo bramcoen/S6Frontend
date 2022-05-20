@@ -83,14 +83,15 @@ jobs:
       run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ${{ secrets.DIGITALOCEAN_CLUSTER }}
       
     - name: Create Secret BackendURL
-      run: kubectl delete secret generic frontendSecret
+      run: kubectl delete secret generic frontendsecret
       continue-on-error: true
       
     - name: Create Secret BackendURL
-      run: kubectl create secret generic frontendSecret --from-literal=GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }} --from-literal=GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }} --from-literal=JWT_SECRET=${{ secrets.JWT_SECRET }} --from-literal=BackendURL=${{ secrets.BackendURL }} --from-literal=NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }} 
+      run: kubectl create secret generic frontendsecret --from-literal=GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }} --from-literal=GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }} --from-literal=JWT_SECRET=${{ secrets.JWT_SECRET }} --from-literal=BackendURL=${{ secrets.BackendURL }} --from-literal=NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }} 
       
     - name: Deploy to DigitalOcean Kubernetes
       run: kubectl apply -f $GITHUB_WORKSPACE/deployment
+      
     - name: Restart pods in deployment
       run: kubectl rollout restart deploy ${{ steps.vars.outputs.sha_short }}
     #- name: Verify deployment
