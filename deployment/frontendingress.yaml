@@ -1,0 +1,46 @@
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: ingress-spring-gateway
+  namespace: default
+  managedFields:
+    - manager: k8saasapi
+      operation: Update
+      apiVersion: networking.k8s.io/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:spec:
+          f:ingressClassName: {}
+    - manager: nginx-ingress-controller
+      operation: Update
+      apiVersion: networking.k8s.io/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:status:
+          f:loadBalancer:
+            f:ingress: {}
+      subresource: status
+    - manager: Go-http-client
+      operation: Update
+      apiVersion: networking.k8s.io/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:spec:
+          f:rules: {}
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: www.coenders.party
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: springgateway
+                port:
+                  number: 8080
+status:
+  loadBalancer:
+    ingress:
+      - ip: 143.244.196.241
