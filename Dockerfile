@@ -24,6 +24,7 @@ COPY . .
 #RUN yarn build
 
 # If using npm comment out above and use below instead
+RUN npm i --force
 RUN npm run build
 
 # Production image, copy all the files and run next
