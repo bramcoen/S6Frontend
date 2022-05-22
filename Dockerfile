@@ -9,6 +9,7 @@ WORKDIR /app
 # If using npm with a `package-lock.json` comment out above and use below instead
 COPY package.json package-lock.json ./
 RUN npm ci
+RUN npm install next-swc-linux-x64-gnu
 
 # Rebuild the source code only when needed
 FROM node:18.1.0-alpine AS builder
@@ -24,7 +25,6 @@ COPY . .
 #RUN yarn build
 
 # If using npm comment out above and use below instead
-RUN npm i --force
 RUN npm run build
 
 # Production image, copy all the files and run next
