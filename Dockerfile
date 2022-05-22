@@ -32,6 +32,7 @@ FROM node:18.1.0-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
+ENV NODE_TLS_REJECT_UNAUTHORIZED 0
 # Uncomment the following line in case you want to disable telemetry during runtime.
 # ENV NEXT_TELEMETRY_DISABLED 1
 
