@@ -3,7 +3,6 @@ import Image from 'next/image'
 import {useSession} from "next-auth/react"
 import Header from "./header/header";
 import axios from "axios";
-import { getCookie } from 'cookies-next';
 import Register from "./account/register";
 
 export default function Home() {

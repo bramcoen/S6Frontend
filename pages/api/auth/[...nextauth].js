@@ -1,8 +1,6 @@
 import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 import axios from "axios"
-import {serialize } from 'cookie';
-import {getCookie} from "cookies-next";
 
 export default (req, res) => {
     let options = {
