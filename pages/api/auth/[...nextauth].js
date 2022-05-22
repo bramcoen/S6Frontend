@@ -26,8 +26,8 @@ export default (req, res) => {
                 const isAllowedToSignIn = true
                 if (isAllowedToSignIn) {
                     if (account.provider === 'google') {
-                        console.log(account);
-                        await RegisterToken(account.id_token, account.expires_at,account.providerAccountId, profile.email);
+                      await GetUsername(profile.id_token); //gets the username of the user, this step is a workaround and should be mitigated.
+                        //The username can't be send to the session step and therefor we should check here if the backend service is available.
 
                         return true;
                     }
@@ -53,7 +53,7 @@ export default (req, res) => {
             async session({ session, user, token }) {
                 session.access_token = token.access_token
                 let username = await GetUsername(token.access_token);
-                console.log(username);
+              //  console.log(username);
                 if (username != null) {
                     session.username = username;
                 }
@@ -62,6 +62,8 @@ export default (req, res) => {
         }}
     return NextAuth(req, res, options)
 }
+//Kept for reference
+/*
 async function RegisterToken(tkn,validUntil,providerId,email){
     var t = null;
     if (validUntil != null) {
@@ -85,13 +87,13 @@ async function RegisterToken(tkn,validUntil,providerId,email){
         exchange: 'token', // default value is defaultExchange
     });
     await publisher.sendMessageByRoute(user)
-};
+};*/
 async function GetUsername(backendToken){
+    console.log(process.env.BackenURL);
     if (backendToken) {
-        console.log(backendToken);
         let username = "";
         const instance = axios.create({
-            baseURL: process.env.BackenURL,
+            baseURL: process.env.BackendURL,
             timeout: 10300
         });
         instance.defaults.headers.common['token'] = backendToken;

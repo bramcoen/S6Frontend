@@ -14,13 +14,14 @@ export default function Register() {
         setUsername(e.target.value);
     }
    function buttonClicked(){
-        axios.put("https://localhost:7102/user/username", {name: username },).catch(i => {if (i.response.status === 500){
+        axios.put("user/username", {name: username },).catch(i => {if (i.response.status === 500){
         setError("Username already exists, please choose another username")}
         else{
             setError("Unexpected error occured, please try again later")
         }
         });
     }
+
     function ChangeConfirmed()
     {
        session.username = username;
