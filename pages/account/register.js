@@ -14,7 +14,7 @@ export default function Register() {
         setUsername(e.target.value);
     }
    function buttonClicked(){
-        axios.put("user/username", {name: username },).catch(i => {if (i.response.status === 500){
+        axios.put(process.env.NEXT_PUBLIC_BackendURL + "user/username", {name: username },).catch(i => {if (i.response.status === 500){
         setError("Username already exists, please choose another username")}
         else{
             setError("Unexpected error occured, please try again later")

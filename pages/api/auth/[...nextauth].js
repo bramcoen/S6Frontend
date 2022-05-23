@@ -87,17 +87,16 @@ async function RegisterToken(tkn,validUntil,providerId,email){
     await publisher.sendMessageByRoute(user)
 };*/
 async function GetUsername(backendToken){
-    console.log(process.env.BackenURL);
     if (backendToken) {
         let username = "";
         const instance = axios.create({
-            baseURL: process.env.BackendURL,
+            baseURL: process.env.NEXT_PUBLIC_BackendURL,
             timeout: 10300
         });
         instance.defaults.headers.common['token'] = backendToken;
      await instance.get( "user/me").then(json => {
           username = json.data.name;
-        }).catch(i => console.log(i));
+        }).catch(i => console.log(i))
         return username;
     }
 }

@@ -48,7 +48,7 @@ spec:
                 secretKeyRef:
                   name: frontendsecret
                   key: NEXTAUTH_URL
-            - name: BackendURL
+            - name: NEXT_PUBLIC_BackendURL
               valueFrom:
                 secretKeyRef:
                   name: frontendsecret
