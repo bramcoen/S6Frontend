@@ -15,6 +15,7 @@ export default function App({
     axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*';
     axios.defaults.headers.put['Access-Control-Allow-Origin'] = '*';
     axios.defaults.headers.delete['Access-Control-Allow-Origin'] = '*';
+    axios.defaults.baseURL = process.env.NEXT_PUBLIC_BackendURL;
     return (
         <SessionProvider session={session}>
             <Component {...pageProps} />
