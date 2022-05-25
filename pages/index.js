@@ -24,7 +24,7 @@ export default function Home() {
   axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*';
   axios.defaults.headers.put['Access-Control-Allow-Origin'] = '*';
   axios.defaults.headers.delete['Access-Control-Allow-Origin'] = '*';
-  axios.defaults.baseURL = process.env.NEXT_PUBLIC_BackendURL;
+  axios.defaults.baseURL = "https://s6.coenders.party";
 
     return <>
       <Header/>
