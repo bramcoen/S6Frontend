@@ -13,7 +13,8 @@ export default function Register() {
     function handleInputChanged(e){
         setUsername(e.target.value);
     }
-   function buttonClicked(){
+   function buttonClicked(e){
+        e.preventDefault();
         axios.put("user/username", {name: username },).catch(i => {if (i.response.status === 500){
         setError("Username already exists, please choose another username")}
         else{
@@ -24,7 +25,7 @@ export default function Register() {
 
     function ChangeConfirmed()
     {
-       session.username = username;
+        session.username = username;
         const router = useRouter();
         router.replace('/')
     }
