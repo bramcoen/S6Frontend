@@ -20,11 +20,7 @@ export default function Home() {
   axios.defaults.headers.get['content-type'] = 'text/json';
   axios.defaults.headers.delete['content-type'] = 'text/json';
   axios.defaults.headers.put['content-type'] = 'text/json';
-  axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-  axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*';
-  axios.defaults.headers.put['Access-Control-Allow-Origin'] = '*';
-  axios.defaults.headers.delete['Access-Control-Allow-Origin'] = '*';
-  axios.defaults.baseURL = "https://s6.coenders.party";
+
 
     return <>
       <Header/>
