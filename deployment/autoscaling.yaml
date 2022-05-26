@@ -1,5 +1,5 @@
 apiVersion: autoscaling/v1
-kind: HorizontalPodAutoscaler
+kind: VerticalPodAutoscaler
 metadata:
   name: frontend
   namespace: default
