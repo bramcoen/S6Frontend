@@ -9,7 +9,7 @@ export default function MessageOverview(username) {
     FetchDataForUsername();
     function FetchDataForUsername(username){
         useEffect(() => {
-            axios.get("message/get/", {name: username},).catch(i => setError(i.error))
+            axios.get("message/get/", {name: username},).then(i => data = i).catch(i => setError(i.error))
         }, []);
     }
 
