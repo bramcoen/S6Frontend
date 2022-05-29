@@ -6,15 +6,17 @@ import axios from "axios";
 export default function MessageOverview(username) {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState(false);
+    const [data, setData] = useState([]);
     FetchDataForUsername();
     function FetchDataForUsername(username){
         useEffect(() => {
-            axios.get("message/get/", {name: username},).then(i => data = i).catch(i => setError(i.error))
+            axios.get("message?username=test").then(i => {
+                setData(i.data);
+            }).catch(i => setError(i.error))
         }, []);
     }
 
     const { data: session } = useSession()
-    let data = ["user1","user2","user3"];
     console.log(session);
     return (<>
             {data.map((value,index) => {return (<Message key={value} message={value}/>)})}

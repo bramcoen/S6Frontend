@@ -4,7 +4,7 @@ import {useRouter} from "next/router";
 import axios from "axios";
 
 export default function Chat(profile) {
-    const [msg, setMsg] = useState("test");
+    const [msg, setMsg] = useState("");
     const [error, setError] = useState("");
     const [success, setSuccess] = useState(false);
     const { data: session } = useSession();
@@ -16,7 +16,9 @@ export default function Chat(profile) {
 
     function buttonClicked(e) {
         e.preventDefault();
-        axios.put("message/send", {text: msg},).catch(i => setError(i.error))
+        axios.post("message/send", {text: msg}, {
+            'Content-Type': 'application/json'
+        }).catch(i => setError(i.error))
     }
 
     function handleInputChanged(e){
@@ -33,7 +35,7 @@ export default function Chat(profile) {
         <form>
             <label>Send a message</label>
             <div className="form-group">
-                <input type="text" value={msg} onChange={handleInputChanged} className="form-control" placeholder="Enter Username"/>
+                <input type="text" value={msg} onChange={handleInputChanged} className="form-control" placeholder="Enter message"/>
             </div>
             <button disabled={msg.length < 1} onClick={buttonClicked} type="submit" className="btn btn-primary">Submit</button>
         </form>

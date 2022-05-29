@@ -31,7 +31,7 @@ export default function Home() {
         </Head>
 
         <main>
-          <MessageOverview username={"session.username"}></MessageOverview>
+          <MessageOverview username={session.username}></MessageOverview>
         <Chat></Chat>
         </main>
       </div>}

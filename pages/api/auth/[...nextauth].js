@@ -24,6 +24,8 @@ export default (req, res) => {
                 const isAllowedToSignIn = true
                 if (isAllowedToSignIn) {
                     if (account.provider === 'google') {
+                        console.log(profile);
+
                       await GetUsername(profile.id_token); //gets the username of the user, this step is a workaround and should be mitigated.
                         //The username can't be send to the session step and therefor we should check here if the backend service is available.
 
