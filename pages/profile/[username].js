@@ -3,9 +3,8 @@ import axios from "axios";
 import Header from "../header/header";
 import MessageOverview from "../Message/MessageOverview";
 
-export default function profile(req, res) {
+export default function Profile(req, res) {
     //const { username } = req.query
-console.log(req.query)
     const { data: session } = useSession();
     if (session) {
         axios.defaults.headers.get['token'] = session.access_token;
