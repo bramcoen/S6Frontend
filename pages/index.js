@@ -28,10 +28,8 @@ export default function Home() {
       {session != null && session.username && <div>
         <Head>
         </Head>
-
         <main>
-          <MessageOverview username={session.username}></MessageOverview>
-
+          <h1>Welcome please select an option in the menu</h1>
         </main>
       </div>}
     </>

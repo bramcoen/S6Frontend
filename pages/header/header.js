@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { useSession, signIn, signOut } from "next-auth/react"
+import Link from "next/link";
 
 export default function Header() {
 
-
         const { data: session } = useSession()
-    console.log(session);
+        let profileUrl = "";
+        if (session != null && session.username !== undefined) {profileUrl = "/profile/"+session.username};
         return (
             <header className="p-3 bg-dark text-white">
                 <div className="container">
@@ -17,7 +18,11 @@ export default function Header() {
                         </a>*/}
 
                         <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                            <li><a href="#" className="nav-link px-2 text-secondary">Home</a></li>
+                            <li><Link href="/" className="nav-link px-2 text-secondary">Home</Link></li>
+                        </ul>
+
+                        <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                            {session != null && session.username !== undefined && <li><Link href={profileUrl} className="nav-link px-2 text-secondary">Profile</Link></li>}
                         </ul>
 
                         <form className="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
