@@ -10,7 +10,7 @@ import MessageOverview from "./Message/MessageOverview";
 
 export default function Home() {
   const { data: session } = useSession()
-  if (session) {
+  if (session && session.access_token) {
     axios.defaults.headers.get['token'] = session.access_token;
     axios.defaults.headers.post['token'] = session.access_token;
     axios.defaults.headers.put['token'] = session.access_token;
@@ -20,7 +20,6 @@ export default function Home() {
   axios.defaults.headers.get['content-type'] = 'text/json';
   axios.defaults.headers.delete['content-type'] = 'text/json';
   axios.defaults.headers.put['content-type'] = 'text/json';
-
 
     return <>
       <Header/>
@@ -32,7 +31,7 @@ export default function Home() {
 
         <main>
           <MessageOverview username={session.username}></MessageOverview>
-        <Chat></Chat>
+
         </main>
       </div>}
     </>

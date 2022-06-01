@@ -3,23 +3,20 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import Message from "./Message";
 import axios from "axios";
 
-export default function MessageOverview(username) {
+export default function MessageOverview ({ ...props }){
     const [error, setError] = useState("");
     const [success, setSuccess] = useState(false);
     const [data, setData] = useState([]);
-    FetchDataForUsername();
-    function FetchDataForUsername(username){
-        useEffect(() => {
-            axios.get("message?username=test").then(i => {
-                setData(i.data);
-            }).catch(i => setError(i.error))
-        }, []);
-    }
 
-    const { data: session } = useSession()
-    console.log(session);
+       useEffect(() => {
+            axios.get("message?username="+props.username).then(i => {
+              var apidata =  i.data.sort((a, b) => a.creationDate - b.creationDate);
+                setData(apidata);
+            }).catch(i => setError(i.error))
+        }, [props.username]);
+
     return (<>
-            {data.map((value,index) => {return (<Message key={value} message={value}/>)})}
+            {data.map((value,index) => {return (<Message key={value.id} message={value}/>)})}
         </>
     )
 }
