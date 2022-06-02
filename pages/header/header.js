@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { useSession, signIn, signOut } from "next-auth/react"
 import Link from "next/link";
 
@@ -6,7 +6,7 @@ export default function Header() {
 
         const { data: session } = useSession()
         let profileUrl = "";
-        if (session != null && session.username !== undefined) {profileUrl = "/profile/"+session.username};
+        if (session != null && session.username !== undefined) {profileUrl = "/profile/"+session.username}
         return (
             <header className="p-3 bg-dark text-white">
                 <div className="container">

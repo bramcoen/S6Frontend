@@ -1,9 +1,8 @@
-import React, {Component, useState} from 'react'
+import React, {useState} from 'react'
 import { useSession} from "next-auth/react"
-import {useRouter} from "next/router";
 import axios from "axios";
 
-export default function Chat(profile) {
+export default function Chat() {
     const [msg, setMsg] = useState("");
     const [error, setError] = useState("");
     const [success, setSuccess] = useState(false);

@@ -1,12 +1,8 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import {useSession} from "next-auth/react"
 import Header from "./header/header";
 import axios from "axios";
 import Register from "./account/register";
-import Message from "./Message/Message";
-import Chat from "./Message/Chat";
-import MessageOverview from "./Message/MessageOverview";
 
 export default function Home() {
   const { data: session } = useSession()
@@ -27,6 +23,7 @@ export default function Home() {
       <Register/>}
       {session != null && session.username && <div>
         <Head>
+          <title>Homepage</title>
         </Head>
         <main>
           <h1>Welcome please select an option in the menu</h1>

@@ -1,7 +1,6 @@
 import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 import axios from "axios"
-import {isEmpty} from "yarn/lib/cli";
 
 export default (req, res) => {
     let options = {
@@ -52,7 +51,7 @@ export default (req, res) => {
             async session({ session, user, token }) {
                 session.access_token = token.access_token
                     let username = await GetUsername(token.access_token);
-                    if (username != null && username !== "") {
+                    if (username !== null && username !== "") {
                         session.username = username;
                     }
                 return session
@@ -99,7 +98,4 @@ async function GetUsername(backendToken){
         }).catch(i => console.log(i))
         return username;
     }
-}
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
 }
