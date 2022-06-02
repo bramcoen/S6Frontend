@@ -34,7 +34,9 @@ export default function Register() {
         session.username = username;
         router.replace('/')
     }
-
+if (session === null){
+    return <h1>Please log in to use this feature.</h1>
+}
         return <>
             {success && error && <div className="alert alert-success alert-dismissible fade show" role="alert">
                 <strong>{error}</strong>
@@ -49,7 +51,10 @@ export default function Register() {
                 </button>
             </div> }
                 <form>
-                    <label>To use the application, please choose an username</label>
+                    {session != null && session.username == null &&
+                        <label>To use the application please enter a username.</label>}
+                    {session != null &&
+                    <label>Change your username here.</label>}
                     <div className="form-group">
                         <label htmlFor="exampleInputEmail1">Username</label>
                         <input type="text" value={username} onChange={handleInputChanged} className="form-control" placeholder="Enter Username"/>

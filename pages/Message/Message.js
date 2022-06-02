@@ -9,7 +9,8 @@ const Message = ({message}) => {
     else {
         return (<>
                 <div className="border border-secondary">
-                    <h1>{message.text}</h1> && <text>{message.creationDate}</text>
+                    <h1>{message.text}</h1>
+                    <text>{message.creationDate}</text>
                 </div>
             </>
         )
