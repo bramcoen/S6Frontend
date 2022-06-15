@@ -3,6 +3,7 @@ import {useSession} from "next-auth/react";
 import axios from "axios";
 import Register from "../account/register";
 import Header from "../header/header";
+import LoggingOverview from "../Logging/LoggingOverview";
 
 const Profile = () => {
     const { data: session } = useSession();
@@ -28,8 +29,8 @@ Please log in first.
             <Header></Header>
         <h1>Profile page</h1>
             <Register></Register>
-            <h1>Placeholder History</h1>
-
+            <h1>History</h1>
+            <LoggingOverview></LoggingOverview>
         </>
     }
 };
